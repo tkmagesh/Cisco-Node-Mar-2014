@@ -36,7 +36,104 @@
 			//assert
 			return result === expectedResult;
 		});
-		
+		test("Should be able to add 2 numbers in string format", function(){
+			//arrange
+			var n1 = "10"
+				,n2 = "20"
+				,expectedResult = 30;
+			//act
+			var result = sum(n1,n2);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to treat non numeric string as 0", function(){
+			//arrange
+			var n1 = "abc"
+				,n2 = "20"
+				,expectedResult = 20;
+			//act
+			var result = sum(n1,n2);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to add two functions returning numbers", function(){
+			//arrange
+			var f1 = function(){ return 10;}
+				,f2 = function(){ return 20; }
+				,expectedResult = 30;
+			
+			//act
+			var result = sum(f1,f2);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to add two functions returning numbers in string format", function(){
+			//arrange
+			var f1 = function(){ return "10";}
+				,f2 = function(){ return "20"; }
+				,expectedResult = 30;
+			
+			//act
+			var result = sum(f1,f2);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to add two functions returning functions returning numbers", function(){
+			//arrange
+			var f1 = function(){ return function(){ return 10;}}
+				,f2 = function(){ return function(){ return 20; }}
+				,expectedResult = 30;
+			
+			//act
+			var result = sum(f1,f2);
+
+			//assert
+			return result === expectedResult;
+		});
+test("Should be able to add two functions returning functions returning numbers in string format", function(){
+			//arrange
+			var f1 = function(){ return function(){ return "10";}}
+				,f2 = function(){ return function(){ return "20"; }}
+				,f3 = function(){ return function(){ return "abc"; }}
+				,expectedResult = 30;
+			
+			//act
+			var result = sum(f1,f2,f3);
+
+			//assert
+			return result === expectedResult;
+		});
+	
+	test("Should be able to add variable length arguments", function(){
+			//arrange
+			var n1 = 10
+				,n2 = "20"
+				,n3 = 30
+				,n4 = "40"
+				,n5 = 50
+				,expectedResult = 150;
+			
+			//act
+			var result = sum(n1,n2,n3,n4,n5);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to add array of numbers", function(){
+			//arrange
+			var numbers = [10,20,30,40,50]
+				,expectedResult = 150;
+			
+			//act
+			var result = sum(numbers);
+
+			//assert
+			return result === expectedResult;
+		});
 	}
 	</script>
 </head>

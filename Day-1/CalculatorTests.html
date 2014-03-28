@@ -94,7 +94,7 @@
 			//assert
 			return result === expectedResult;
 		});
-test("Should be able to add two functions returning functions returning numbers in string format", function(){
+test("Should be able to add functions returning functions returning numbers in string format", function(){
 			//arrange
 			var f1 = function(){ return function(){ return "10";}}
 				,f2 = function(){ return function(){ return "20"; }}
@@ -130,6 +130,30 @@ test("Should be able to add two functions returning functions returning numbers 
 			
 			//act
 			var result = sum(numbers);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to add an array of functions returning numbers in string format", function(){
+			//arrange
+			var f1 = function(){ return "10";}
+				,f2 = function(){ return "20"; }
+				,expectedResult = 30;
+			
+			//act
+			var result = sum([f1,f2]);
+
+			//assert
+			return result === expectedResult;
+		});
+		test("Should be able to add an array of functions returning array of numbers in string format", function(){
+			//arrange
+			var f1 = function(){ return ["10","20"];}
+				,f2 = function(){ return ["30",40]; }
+				,expectedResult = 100;
+			
+			//act
+			var result = sum([f1,f2]);
 
 			//assert
 			return result === expectedResult;

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Browser Threading Model - Demo</title>
+	<script>
+	(function(){
+		window.addEventListener("DOMContentLoaded",init);
+		function init(){
+			document.getElementById("btnDoWork").addEventListener("click",onBtnDoWorkClick);
+		}
+		function onBtnDoWorkClick(){
+			displayMessage("Work Started..");
+
+			doWork(function (){
+				displayMessage("Work Completed...");
+			}, function(percentCompleted){
+				document.getElementById("progress").value = percentCompleted;
+			});
+				
+
+		}
+		function doWork(onCompletionCallback,onProgressCallback){
+			var totalIterations = 100;
+			var currIter = 1;
+			function oneIter(){
+				for(var i=0;i<10000 / totalIterations;i++)
+					for(var j=0;j<10000;j++)
+						for(var k=0;k<100;k++){
+
+						}
+				++currIter;
+				if (typeof onProgressCallback === "function") onProgressCallback((currIter/ totalIterations) * 100);
+				if (currIter < totalIterations){
+					setTimeout(oneIter);
+				} else {
+					if (typeof onCompletionCallback === "function") onCompletionCallback();
+				}
+			}
+			oneIter();
+		}
+		function displayMessage(msg){
+			document.getElementById("divMessages").innerHTML += msg + "<br/>";
+		}
+	})();
+	</script>
+</head>
+<body>
+	<input type="text" name="" id="">
+	<input type="button" value="Do Work" id="btnDoWork">
+	<br>
+	<progress id="progress" min="0" max="100" value="0"></progress>
+	<div id="divMessages"></div>
+</body>
+</html>

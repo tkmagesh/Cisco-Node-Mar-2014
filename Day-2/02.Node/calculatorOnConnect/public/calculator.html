@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<script src="/scripts/jquery-1.11.0.js"></script>
+	<script>
+	$(function(){
+		$("#btnCalculate").click(function(){
+			var data = {
+				txtNumber1 : $("#txtNumber1").val(),
+				txtNumber2 : $("#txtNumber2").val(),
+				selectOperator : $("#selectOperator").val()
+			};
+			$.ajax({
+				url : "/calculate",
+				data : JSON.stringify(data),
+				type : "post",
+				dataType : "json",
+				contentType : "application/json",
+				success : function(res){
+					$("#result").html(res.result);
+				}
+			});
+		})
+	});
+	</script>
+</head>
+<body>
+	<form action="/calculate" method="post">
+		<label for="txtNumber1">Number 1:</label>
+		<input type="text" name="txtNumber1" id="txtNumber1" value="">
+		<label for="txtNumber2">Number 2:</label>
+		<input type="text" name="txtNumber2" id="txtNumber2" value="">
+		<select name="selectOperator" id="selectOperator">
+			<option value="add">Add</option>
+			<option value="subtract">Subtract</option>
+			<option value="multiply">Multiply</option>
+			<option value="divide">Divide</option>
+		</select>
+		<input type="button" value="Calculate" id="btnCalculate">
+	</form>
+	<h3 id="result"></h3>
+</body>
+</html>

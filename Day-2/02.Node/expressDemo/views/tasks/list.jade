@@ -1,0 +1,20 @@
+html
+  head
+    title Task List
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="/javascripts/vendor/jquery-1.11.0.js")
+    script(src="/javascripts/app/task.js")
+  body
+    h1 Task Manager
+    hr
+    form(method="post", action="/tasks/add")
+      span Task :
+      input#txtTask(name="taskName",type="text")
+      input#btnSubmit(type="submit", value="Add Task")
+    ul#ulTaskList
+      each task in tasks
+        if task.isCompleted
+          li.completed(task-id="#{task.id}") #{task.name}	
+        else
+          li(task-id="#{task.id}") #{task.name}
+    div Total Task Count : #{tasks.length}

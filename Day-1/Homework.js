@@ -10,10 +10,10 @@
 		{id : 1, name : "stationary"},
 		{id : 2, name : "grocery"}
 	]
-
+/*
 	function join(products,categories,/*.....*/){
 
-	}
+	}*/
 	/*
 	the result of the above function call should be
 	[
@@ -25,3 +25,26 @@
 		{id : 109, name:"zen", cost:61, units :23, category:"grocery"},
 	]
 	*/
+
+function join(left,right,leftKey,rightKey,transformFn){
+  var result = [];
+  for(var i=0;i<left.length;i++){
+     var key1 = left[i][leftKey];
+     for(var j=0;j<right.length;j++){
+        var key2 = right[j][rightKey];
+        if (key1 === key2){
+           var joinedObj = transformFn(left[i],right[j]);
+           result.push(joinedObj);
+           break;
+        }
+      }
+    }
+   return result;
+}
+
+/*Using the above function*/
+var result = join(products,categories,"category","id",function(p,c){
+    return {id : p.id,name :p.name, cost : p.cost, units : p.units, category : c.name};
+});
+
+console.table(result);

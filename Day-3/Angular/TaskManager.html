@@ -4,30 +4,79 @@
 	<meta charset="UTF-8">
 	<title>Task Manager</title>
 	<script src="angular.js"></script>
-	<script>
-	function taskController($scope){
-		$scope.tasks = {
-			list : [],
-			add : function(taskName){
-				this.list.push(taskName);
-			}
-		}
-		
+	<style>
+	.completed {
+		color : red;
+		text-decoration: line-through;
 	}
+	</style>
+	<script>
+	angular
+		.module('myApp',[])
+		.factory('taskStorage',[function(){
+			var storage = window.localStorage;
+
+			return {
+				addTask : function(taskName){
+					var newId = new Date().getTime().toString();
+					var newTask = {
+						id : newId,
+						name : taskName,
+						isCompleted : false
+					};
+					storage.setItem(newId,window.JSON.stringify(newTask));
+					return newTask;
+				},
+				removeTask : function(taskId){
+					storage.removeItem(taskId);
+				},
+				getAll : function(){
+					var result = [];
+					for(var i=0;i<storage.length;i++){
+						var key = storage.key(i);
+						var task = window.JSON.parse(storage.getItem(key));
+						result.push(task);
+					}
+					return result;
+				}
+
+			}
+		}])
+		.controller('taskController', ['$scope','taskStorage',function ($scope,store){
+			//console.log(store);
+			$scope.tasks = {
+				list : store.getAll(),
+				add : function(taskName){
+					store.addTask(taskName);
+				},
+				removeCompleted : function(){
+					for(var i=this.list.length-1;i>=0;i--)
+						if (this.list[i].isCompleted)
+							this.list.splice(i,1);
+				},
+				getCount : function(){
+					return this.list.length;
+				}
+			}
+		}]);
+	
 	</script>
 </head>
-<body data-ng-app>
+<body data-ng-app="myApp">
 	<h1>Task Manager</h1>
 	<hr>
 	<div id="content" data-ng-controller="taskController">
 		<span>Task :</span>
 		<input type="text" name="" id="" ng-model="newTask">
 		<input type="button" value="Add Task" id="btnAddTask" ng-click="tasks.add(newTask)">
-		<input type="button" value="Remove Completed" id="removeCompleted">
+		<input type="button" value="Remove Completed" id="removeCompleted" ng-click="tasks.removeCompleted()">
 		<ul id="ulTaskList">
-			<li data-ng-repeat="task in tasks.list">{{task}}</li>
+			<li 
+				data-ng-repeat="task in tasks.list" 
+				data-ng-class="{completed : task.isCompleted}"
+				ng-click="task.toggleCompletion()">{{task.name}}</li>
 		</ul>
-		<div>Task Count : {{tasks.list.length}}</div>
+		<div>Task Count : {{tasks.getCount()}}</div>
 	</div>
 </body>
 </html>

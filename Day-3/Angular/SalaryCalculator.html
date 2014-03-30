@@ -26,7 +26,8 @@
 				this.salary = net;
 			}
 		}
-	function salaryCalculatorController($scope){
+	function salaryCalculatorController($scope,$http){
+		console.dir($http);
 		$scope.calculator = calculator;
 		window.scope = $scope;
 	}
@@ -35,7 +36,7 @@
 <body ng-app>
 	<h3>Salary Calculator</h3>
 	<hr>
-	<div data-ng-controller="salaryCalculatorController">
+	<div ng-controller="salaryCalculatorController">
 		<div><label for="">Basic :</label>
 		<input type="text" name="" id="txtBasic" ng-model="calculator.basic"></div>
 		<div><label for="">HRA :</label>
@@ -49,7 +50,7 @@
 		</div>
 		<div><input type="button" value="Calculate" id="btnCalculate" ng-click="calculator.calculate()"></div>
 		<div>
-			<div id="divResult">{{calculator.salary}}</div>
+			<div id="divResult">{{calculator.salary | currency}}</div>
 		</div>
 
 	</div>

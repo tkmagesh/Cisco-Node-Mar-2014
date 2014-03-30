@@ -12,51 +12,18 @@
 		color : red;
 	}
 	</style>
-	<script src="jquery-1.11.0.js"></script>
+	<script src="require.js" data-main="main.js"></script>
+	<!-- <script src="jquery-1.11.0.js"></script>
 	<script src="SalaryCalculatorModel.js"></script>
+	<script src="main.js"></script>
+	<script src="SalaryCalculatorView.js"></script>
 	<script>
 	
-
+	
 	$(function(){
-		window.calculator = new SalaryCalculator();
-		
-		calculator.addSubscriber("salary", function(){
-			$("#divResult").html(calculator.salary());
-		});
-		calculator.addSubscriber("basic", function(){
-			$("#txtBasic").val(calculator.basic());
-		});
-		calculator.addSubscriber("hra", function(){
-			$("#txtHra").val(calculator.hra());
-		});
-		calculator.addSubscriber("da", function(){
-			$("#txtDa").val(calculator.da());
-		});
-		calculator.addSubscriber("tax", function(){
-			$("#rangeTax").val(calculator.tax());
-			$("#spanTax").html(calculator.tax());
-		});
-
-
-		$("#txtBasic").change(function(){
-			calculator.basic(parseInt(this.value));
-		});
-		$("#txtHra").change(function(){
-			calculator.hra(parseInt(this.value));
-		});
-		$("#txtDa").change(function(){
-			calculator.da(parseInt(this.value));
-		});
-		$("#rangeTax").change(function(){
-			calculator.tax(parseInt(this.value));
-		});
-
-		$("#btnCalculate").click(function(){
-			calculator.calculate();
-		});
-		
+		app();
 	});
-	</script>
+	</script> -->
 </head>
 <body>
 	<h3>Salary Calculator</h3>

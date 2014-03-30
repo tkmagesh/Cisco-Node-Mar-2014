@@ -1,4 +1,5 @@
-function SalaryCalculator(){
+define([],function(){
+	function SalaryCalculatorModel(){
 		this._subscribers = {};
 		var _basic = 0,
 			_hra = 0,
@@ -40,14 +41,16 @@ function SalaryCalculator(){
 		};
 		
 	}
-	SalaryCalculator.prototype.addSubscriber = function(attrName,callbackFn){
+	SalaryCalculatorModel.prototype.addSubscriber = function(attrName,callbackFn){
 		if(typeof this._subscribers[attrName] === "undefined") 
 			this._subscribers[attrName] = [];
 		this._subscribers[attrName].push(callbackFn);
 	}
-	SalaryCalculator.prototype.calculate = function(){
+	SalaryCalculatorModel.prototype.calculate = function(){
 		var net = this.basic() + this.hra() + this.da();
 		var gross = net * ((100-this.tax())/100);
 		this.salary(gross);
 		
 	}
+	return SalaryCalculatorModel;
+});

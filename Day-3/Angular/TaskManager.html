@@ -3,16 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Task Manager</title>
+	<script src="angular.js"></script>
+	<script>
+	function taskController($scope){
+		$scope.tasks = {
+			list : [],
+			add : function(taskName){
+				this.list.push(taskName);
+			}
+		}
+		
+	}
+	</script>
 </head>
-<body>
+<body data-ng-app>
 	<h1>Task Manager</h1>
 	<hr>
-	<div id="content">
+	<div id="content" data-ng-controller="taskController">
 		<span>Task :</span>
-		<input type="text" name="" id="">
-		<input type="button" value="Add Task" id="btnAddTask">
+		<input type="text" name="" id="" ng-model="newTask">
+		<input type="button" value="Add Task" id="btnAddTask" ng-click="tasks.add(newTask)">
 		<input type="button" value="Remove Completed" id="removeCompleted">
-		<ul id="ulTaskList"></ul>
+		<ul id="ulTaskList">
+			<li data-ng-repeat="task in tasks.list">{{task}}</li>
+		</ul>
+		<div>Task Count : {{tasks.list.length}}</div>
 	</div>
 </body>
 </html>
